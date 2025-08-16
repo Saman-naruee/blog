@@ -1,12 +1,25 @@
-version: "4.3"
-
 services:
-    backend:
-        build: .
-        command: python manage.py runserver 0.0.0.0:8000
-        ports:
-            - "8000:8000"
-        volumes:
-            - ./blog:/app
-        environment:
-            - DJANGO_SETTINGS_MODULE=blog.settings
+  db:
+    image: postgres:17
+    container_name: blog_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: blog_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=blog.settings
