@@ -5,6 +5,12 @@ FROM python:3.10-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Install essential tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
 # Create and set the working directory inside the container
 WORKDIR /app
 
