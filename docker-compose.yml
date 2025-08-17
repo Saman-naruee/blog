@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:17
-    container_name: blog_db
+    container_name: blog_db_container
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -13,7 +13,7 @@ services:
 
   backend:
     build: .
-    container_name: blog_backend
+    container_name: blog_backend_container
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
